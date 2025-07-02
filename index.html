@@ -277,6 +277,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
+            objectക
             object-fit: cover;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -295,14 +296,6 @@
             z-index: 2;
             transform: rotate(-2deg);
             opacity: 0.9;
-        }
-
-        .stack-image:nth-child(3) {
-            top: 20px;
-            left: 0;
-            z-index: 1;
-            transform: rotate(2deg);
-            opacity: 0.8;
         }
 
         .stack-title {
@@ -428,8 +421,8 @@
         }
 
         .about-image {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
             margin: 2rem auto;
@@ -492,26 +485,26 @@
         }
 
         .stack-image {
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
 
-/* Makes it harder to select the actual image */
-.photo-stack {
-  position: relative;
-}
-.photo-stack::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-}
+        /* Makes it harder to select the actual image */
+        .photo-stack {
+            position: relative;
+        }
+        .photo-stack::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+        }
 
         /* Smooth scrolling */
         html {
@@ -552,48 +545,14 @@
     <section id="gallery" class="gallery-section">
         <h2 class="section-title">Featured Work</h2>
         <div class="gallery-grid" id="galleryGrid">
-            <!-- Stack 1 - Mountains -->
+            <!-- Stack 1 - Long Exposure Series -->
             <div class="photo-stack" onclick="openStack(1)">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop"
-                    alt="Mountain Landscape" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=1000&fit=crop"
-                    alt="Mountain Sunset" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=1000&fit=crop"
-                    alt="Mountain Lake" class="stack-image">
-                <div class="stack-title">Mountain Series</div>
-            </div>
-
-            <!-- Stack 2 - Forests -->
-            <div class="photo-stack" onclick="openStack(2)">
-                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop"
-                    alt="Forest Path" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&h=1000&fit=crop"
-                    alt="Forest Fog" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=800&h=1000&fit=crop"
-                    alt="Forest Stream" class="stack-image">
-                <div class="stack-title">Forest Series</div>
-            </div>
-
-            <!-- Stack 3 - Oceans -->
-            <div class="photo-stack" onclick="openStack(3)">
-                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=1000&fit=crop"
-                    alt="Ocean Waves" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&h=1000&fit=crop"
-                    alt="Ocean Sunset" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=800&h=1000&fit=crop"
-                    alt="Ocean Rocks" class="stack-image">
-                <div class="stack-title">Ocean Series</div>
-            </div>
-
-            <!-- Stack 4 - Deserts -->
-            <div class="photo-stack" onclick="openStack(4)">
-                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop"
-                    alt="Desert Sunset" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=1000&fit=crop"
-                    alt="Desert Dunes" class="stack-image">
-                <img src="https://images.unsplash.com/photo-1509315703191-efa5b47b3d4f?w=800&h=1000&fit=crop"
-                    alt="Desert Night" class="stack-image">
-                <div class="stack-title">Desert Series</div>
+                <img src="https://i.ibb.co/PZyLhM21/PXL-20250628-131843875-LONG-EXPOSURE-01-COVER-2-1.jpg"
+                    alt="Long Exposure 1" class="stack-image">
+                <img src="https://i.ibb.co/0R7YSR61/PXL-20250628-131851376-LONG-EXPOSURE-01-COVER-3.jpg"
+ Colombo
+                    alt="Long Exposure 2" class="stack-image">
+                <div class="stack-title">Long Exposure Series</div>
             </div>
         </div>
     </section>
@@ -602,7 +561,7 @@
     <section id="about" class="about-section">
         <div class="about-content">
             <h2 class="about-title">About Me</h2>
-            <img src="https://i.ibb.co/Y4VpXvSb/PXL-20240329-112152211-PORTRAIT-01-2.jpg" alt="PXL-20240329-112152211-PORTRAIT-01-2" border="0">
+            <img src="https://i.ibb.co/Y4VpXvSb/PXL-20240329-112152211-PORTRAIT-01-2.jpg" alt="Vamshi Vishruth" class="about-image">
             <p class="about-text">
                 Hey!
 I'm Vamshi Vishruth a computer science student who also happens to have a soft spot for nature, planes, and capturing random bits of life through a camera lens. While most of my days revolve around code and debugging, this little corner of the internet is not about that.
@@ -647,114 +606,50 @@ Thanks for dropping by. Hope you enjoy scrolling through the gallery as much as 
 
     <script>
         // Enhanced protection
-document.addEventListener('DOMContentLoaded', function() {
-  // Disable right-click on images
-  document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'IMG') {
-      e.preventDefault();
-    }
-  }, false);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right-click on images
+            document.addEventListener('contextmenu', function(e) {
+                if (e.target.tagName === 'IMG') {
+                    e.preventDefault();
+                }
+            }, false);
 
-  // Disable dragging
-  const allImages = document.querySelectorAll('img');
-  allImages.forEach(img => {
-    img.setAttribute('draggable', 'false');
-    img.addEventListener('dragstart', (e) => e.preventDefault());
-  });
+            // Disable dragging
+            const allImages = document.querySelectorAll('img');
+            allImages.forEach(img => {
+                img.setAttribute('draggable', 'false');
+                img.addEventListener('dragstart', (e) => e.preventDefault());
+            });
 
-  // Add transparent overlay to images
-  const photoStacks = document.querySelectorAll('.photo-stack');
-  photoStacks.forEach(stack => {
-    const overlay = document.createElement('div');
-    overlay.style.position = 'absolute';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.zIndex = '10';
-    overlay.style.pointerEvents = 'none';
-    stack.appendChild(overlay);
-  });
-});
+            // Add transparent overlay to images
+            const photoStacks = document.querySelectorAll('.photo-stack');
+            photoStacks.forEach(stack => {
+                const overlay = document.createElement('div');
+                overlay.style.position = 'absolute';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.zIndex = '10';
+                overlay.style.pointerEvents = 'none';
+                stack.appendChild(overlay);
+            });
+        });
+
         // Gallery data organized by stacks
         const galleryStacks = {
             1: {
-                title: "Mountain Series",
+                title: "Long Exposure Series",
                 images: [
                     {
-                        src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=1500&fit=crop",
-                        title: "Mountain Vista",
-                        description: "Capturing the serenity of dawn"
+                        src: "https://i.ibb.co/PZyLhM21/PXL-20250628-131843875-LONG-EXPOSURE-01-COVER-2-1.jpg",
+                        title: "Long Exposure 1",
+                        description: "Long exposure capturing light trails"
                     },
                     {
-                        src: "https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&h=1500&fit=crop",
-                        title: "Mountain Sunset",
-                        description: "Golden hour in the peaks"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=1500&fit=crop",
-                        title: "Mountain Lake",
-                        description: "Reflections of tranquility"
-                    }
-                ]
-            },
-            2: {
-                title: "Forest Series",
-                images: [
-                    {
-                        src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=1500&fit=crop",
-                        title: "Forest Journey",
-                        description: "Into the heart of nature"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&h=1500&fit=crop",
-                        title: "Misty Forest",
-                        description: "Morning fog in the woods"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1200&h=1500&fit=crop",
-                        title: "Forest Stream",
-                        description: "Water flowing through trees"
-                    }
-                ]
-            },
-            3: {
-                title: "Ocean Series",
-                images: [
-                    {
-                        src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&h=1500&fit=crop",
-                        title: "Ocean Dreams",
-                        description: "Where water meets sky"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&h=1500&fit=crop",
-                        title: "Ocean Sunset",
-                        description: "Colors of the horizon"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=1200&h=1500&fit=crop",
-                        title: "Ocean Rocks",
-                        description: "Power of the sea"
-                    }
-                ]
-            },
-            4: {
-                title: "Desert Series",
-                images: [
-                    {
-                        src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&h=1500&fit=crop",
-                        title: "Desert Gold",
-                        description: "Golden hour magic"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1200&h=1500&fit=crop",
-                        title: "Desert Dunes",
-                        description: "Waves of sand"
-                    },
-                    {
-                        src: "https://images.unsplash.com/photo-1509315703191-efa5b47b3d4f?w=1200&h=1500&fit=crop",
-                        title: "Desert Night",
-                        description: "Starry desert sky"
+                        src: "https://i.ibb.co/0R7YSR61/PXL-20250628-131851376-LONG-EXPOSURE-01-COVER-3.jpg",
+                        title: "Long Exposure 2",
+                        description: "Dynamic motion in low light"
                     }
                 ]
             }
