@@ -243,12 +243,21 @@
         }
 
         /* Photo Stack Styles */
-        .photo-stack {
-            position: relative;
-            height: 400px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+.photo-stack {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    max-width: 300px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .photo-stack {
+        height: 300px;
+        max-width: 100%;
+    }
+}
 
         .photo-stack:hover {
             transform: translateY(-10px);
@@ -275,10 +284,11 @@
 
         .stack-image {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            objectക
-            object-fit: cover;
+/*             width: 100%; */
+/*             height: 100%; */
+            object-fit: contain;
+/*             objectക */
+/*             object-fit: cover; */
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
