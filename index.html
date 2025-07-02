@@ -491,6 +491,28 @@
             }
         }
 
+        .stack-image {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Makes it harder to select the actual image */
+.photo-stack {
+  position: relative;
+}
+.photo-stack::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
         /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
@@ -625,6 +647,36 @@ Thanks for dropping by. Hope you enjoy scrolling through the gallery as much as 
     </div>
 
     <script>
+        // Enhanced protection
+document.addEventListener('DOMContentLoaded', function() {
+  // Disable right-click on images
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
+    }
+  }, false);
+
+  // Disable dragging
+  const allImages = document.querySelectorAll('img');
+  allImages.forEach(img => {
+    img.setAttribute('draggable', 'false');
+    img.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+
+  // Add transparent overlay to images
+  const photoStacks = document.querySelectorAll('.photo-stack');
+  photoStacks.forEach(stack => {
+    const overlay = document.createElement('div');
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.zIndex = '10';
+    overlay.style.pointerEvents = 'none';
+    stack.appendChild(overlay);
+  });
+});
         // Gallery data organized by stacks
         const galleryStacks = {
             1: {
