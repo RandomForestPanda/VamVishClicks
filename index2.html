@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Your Name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0ff;
+            overflow-x: hidden;
+        }
+
+        /* Cosmic Background */
+        .cosmic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #0a0a1a 0%, #000000 100%);
+            z-index: -3;
+        }
+
+        /* Meteor Shower */
+        .meteor-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .meteor {
+            position: absolute;
+            height: 1px;
+            width: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: meteor 5s linear infinite;
+            transform: rotate(215deg);
+        }
+
+        @keyframes meteor {
+            0% {
+                transform: rotate(215deg) translateX(0);
+                opacity: 1;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(215deg) translateX(-1000px);
+                opacity: 0;
+            }
+        }
+
+        /* Glowing Stars */
+        .star-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f5f5f7;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #f5f5f7 0%, #86868b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #f5f5f7;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.03em;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Typewriter animation */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #f5f5f7;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation:
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #f5f5f7; }
+        }
+
+        /* Photo Stack Styles */
+        .photo-stack {
+            position: relative;
+            height: 400px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-stack:hover {
+            transform: translateY(-10px);
+        }
+
+        .photo-stack::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .photo-stack:hover::after {
+            opacity: 1;
+        }
+
+        .stack-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stack-image:nth-child(1) {
+            position: relative;
+            z-index: 3;
+            transform: rotate(0deg);
+        }
+
+        .stack-image:nth-child(2) {
+            top: 10px;
+            left: 0;
+            z-index: 2;
+            transform: rotate(-2deg);
+            opacity: 0.9;
+        }
+
+        .stack-image:nth-child(3) {
+            top: 20px;
+            left: 0;
+            z-index: 1;
+            transform: rotate(2deg);
+            opacity: 0.8;
+        }
+
+        .stack-title {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            z-index: 5;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #f5f5f7;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-prev {
+            left: -80px;
+        }
+
+        .modal-next {
+            right: -80px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #f5f5f7;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 6rem 2rem;
+            background: rgba(17, 17, 17, 0.7);
+            margin: 4rem 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .about-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 2rem auto;
+            display: block;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .footer p {
+            opacity: 0.6;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: #f5f5f7;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .modal-prev {
+                left: 10px;
+            }
+
+            .modal-next {
+                right: 10px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Cosmic Background and Effects -->
+    <div class="cosmic-background"></div>
+    <div class="meteor-layer" id="meteorLayer"></div>
+    <div class="star-layer" id="starLayer"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">Cosmic Visions</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="typewriter">Visual Stories</h1>
+            <p>Capturing life's precious moments through the lens</p>
+            <a href="#gallery" class="cta-button">View Gallery</a>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <h2 class="section-title">Featured Work</h2>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Stack 1 - Mountains -->
+            <div class="photo-stack" onclick="openStack(1)">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=1000&fit=crop"
+                    alt="Mountain Landscape" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=1000&fit=crop"
+                    alt="Mountain Sunset" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=1000&fit=crop"
+                    alt="Mountain Lake" class="stack-image">
+                <div class="stack-title">Mountain Series</div>
+            </div>
+
+            <!-- Stack 2 - Forests -->
+            <div class="photo-stack" onclick="openStack(2)">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1000&fit=crop"
+                    alt="Forest Path" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&h=1000&fit=crop"
+                    alt="Forest Fog" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=800&h=1000&fit=crop"
+                    alt="Forest Stream" class="stack-image">
+                <div class="stack-title">Forest Series</div>
+            </div>
+
+            <!-- Stack 3 - Oceans -->
+            <div class="photo-stack" onclick="openStack(3)">
+                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=1000&fit=crop"
+                    alt="Ocean Waves" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&h=1000&fit=crop"
+                    alt="Ocean Sunset" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=800&h=1000&fit=crop"
+                    alt="Ocean Rocks" class="stack-image">
+                <div class="stack-title">Ocean Series</div>
+            </div>
+
+            <!-- Stack 4 - Deserts -->
+            <div class="photo-stack" onclick="openStack(4)">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=1000&fit=crop"
+                    alt="Desert Sunset" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=1000&fit=crop"
+                    alt="Desert Dunes" class="stack-image">
+                <img src="https://images.unsplash.com/photo-1509315703191-efa5b47b3d4f?w=800&h=1000&fit=crop"
+                    alt="Desert Night" class="stack-image">
+                <div class="stack-title">Desert Series</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <h2 class="about-title">About Me</h2>
+            <img src="./images/PXL_20240329_112152211.PORTRAIT-01~2.jpeg"
+                alt="Profile" class="about-image">
+            <p class="about-text">
+                I'm a passionate photographer who believes in the power of visual storytelling. Through my lens, I
+                capture the beauty in everyday moments and the extraordinary in the ordinary. Each photograph is a
+                window into a world of emotions, memories, and dreams.
+            </p>
+            <p class="about-text">
+                My journey in photography began with a simple desire to freeze time and preserve the fleeting moments
+                that make life beautiful. Today, I continue to explore the world through my camera, always seeking new
+                perspectives and stories to tell.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <p>© 2025 Your Name. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="Twitter">Twitter</a>
+            <a href="#" aria-label="Email">Email</a>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-nav modal-prev" onclick="prevImage()">←</button>
+            <img id="modalImage" src="" alt="">
+            <button class="modal-nav modal-next" onclick="nextImage()">→</button>
+        </div>
+    </div>
+
+    <script>
+        // Gallery data organized by stacks
+        const galleryStacks = {
+            1: {
+                title: "Mountain Series",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=1500&fit=crop",
+                        title: "Mountain Vista",
+                        description: "Capturing the serenity of dawn"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&h=1500&fit=crop",
+                        title: "Mountain Sunset",
+                        description: "Golden hour in the peaks"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=1500&fit=crop",
+                        title: "Mountain Lake",
+                        description: "Reflections of tranquility"
+                    }
+                ]
+            },
+            2: {
+                title: "Forest Series",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=1500&fit=crop",
+                        title: "Forest Journey",
+                        description: "Into the heart of nature"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&h=1500&fit=crop",
+                        title: "Misty Forest",
+                        description: "Morning fog in the woods"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1200&h=1500&fit=crop",
+                        title: "Forest Stream",
+                        description: "Water flowing through trees"
+                    }
+                ]
+            },
+            3: {
+                title: "Ocean Series",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&h=1500&fit=crop",
+                        title: "Ocean Dreams",
+                        description: "Where water meets sky"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&h=1500&fit=crop",
+                        title: "Ocean Sunset",
+                        description: "Colors of the horizon"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=1200&h=1500&fit=crop",
+                        title: "Ocean Rocks",
+                        description: "Power of the sea"
+                    }
+                ]
+            },
+            4: {
+                title: "Desert Series",
+                images: [
+                    {
+                        src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&h=1500&fit=crop",
+                        title: "Desert Gold",
+                        description: "Golden hour magic"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1200&h=1500&fit=crop",
+                        title: "Desert Dunes",
+                        description: "Waves of sand"
+                    },
+                    {
+                        src: "https://images.unsplash.com/photo-1509315703191-efa5b47b3d4f?w=1200&h=1500&fit=crop",
+                        title: "Desert Night",
+                        description: "Starry desert sky"
+                    }
+                ]
+            }
+        };
+
+        let currentStack = null;
+        let currentImageIndex = 0;
+
+        // Generate meteors
+        function createMeteors() {
+            const meteorLayer = document.getElementById('meteorLayer');
+            const meteorCount = 20;
+
+            for (let i = 0; i < meteorCount; i++) {
+                const meteor = document.createElement('div');
+                meteor.classList.add('meteor');
+
+                const posY = Math.random() * 100;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 3;
+
+                meteor.style.top = `${posY}%`;
+                meteor.style.left = `${posX}%`;
+                meteor.style.animationDelay = `${delay}s`;
+                meteor.style.animationDuration = `${duration}s`;
+
+                meteorLayer.appendChild(meteor);
+            }
+        }
+
+        // Generate stars
+        function createStars() {
+            const starLayer = document.getElementById('starLayer');
+            const starCount = 100;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 2;
+                const size = Math.random() * 3 + 2;
+                const hue = Math.random() * 60 + 240; // Blue-purple hues
+
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                star.style.background = `hsl(${hue}, 80%, 90%)`;
+                star.style.boxShadow = `0 0 20px hsl(${hue}, 80%, 90%)`;
+
+                starLayer.appendChild(star);
+            }
+        }
+
+        // Open stack in fullscreen
+        function openStack(stackId) {
+            currentStack = galleryStacks[stackId];
+            currentImageIndex = 0;
+
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+
+            modalImage.src = currentStack.images[0].src;
+            modalImage.alt = currentStack.images[0].title;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Navigate to next image
+        function nextImage() {
+            if (!currentStack) return;
+
+            currentImageIndex = (currentImageIndex + 1) % currentStack.images.length;
+            updateModalImage();
+        }
+
+        // Navigate to previous image
+        function prevImage() {
+            if (!currentStack) return;
+
+            currentImageIndex = (currentImageIndex - 1 + currentStack.images.length) % currentStack.images.length;
+            updateModalImage();
+        }
+
+        // Update the modal with current image
+        function updateModalImage() {
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = currentStack.images[currentImageIndex].src;
+            modalImage.alt = currentStack.images[currentImageIndex].title;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            const modal = document.getElementById('photoModal');
+            if (!modal.classList.contains('active')) return;
+
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Close modal when clicking outside image
+        document.getElementById('photoModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+
+        // Initialize effects when page loads
+        window.addEventListener('DOMContentLoaded', function () {
+            createMeteors();
+            createStars();
+        });
+    </script>
+</body>
+</html>
