@@ -245,9 +245,12 @@
         /* Photo Stack Styles */
         .photo-stack {
             position: relative;
-            height: 400px;
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 4 / 3;
             cursor: pointer;
             transition: all 0.3s ease;
+            overflow: hidden;
         }
 
         .photo-stack:hover {
@@ -277,24 +280,23 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            objectക
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .stack-image:nth-child(1) {
-            position: relative;
             z-index: 3;
-            transform: rotate(0deg);
+            transform: translate(-50%, -50%) rotate(0deg);
         }
 
         .stack-image:nth-child(2) {
-            top: 10px;
-            left: 0;
             z-index: 2;
-            transform: rotate(-2deg);
+            transform: translate(-50%, -50%) rotate(-2deg);
             opacity: 0.9;
         }
 
@@ -482,6 +484,11 @@
             .modal-next {
                 right: 10px;
             }
+
+            .photo-stack {
+                max-width: 100%;
+                aspect-ratio: 4 / 3;
+            }
         }
 
         .stack-image {
@@ -493,9 +500,6 @@
         }
 
         /* Makes it harder to select the actual image */
-        .photo-stack {
-            position: relative;
-        }
         .photo-stack::after {
             content: "";
             position: absolute;
@@ -550,7 +554,6 @@
                 <img src="https://i.ibb.co/PZyLhM21/PXL-20250628-131843875-LONG-EXPOSURE-01-COVER-2-1.jpg"
                     alt="Long Exposure 1" class="stack-image">
                 <img src="https://i.ibb.co/0R7YSR61/PXL-20250628-131851376-LONG-EXPOSURE-01-COVER-3.jpg"
- Colombo
                     alt="Long Exposure 2" class="stack-image">
                 <div class="stack-title">Long Exposure Series</div>
             </div>
@@ -571,16 +574,13 @@ I'm Vamshi Vishruth a computer science student who also happens to have a soft s
 This site is more of a digital escape zone — something I vibe-coded for fun — to showcase some of my hobbies. I’ve always found peace in gardening, excitement in aviation, and a weird joy in clicking photos of things that catch my eye, from skies and leaves to fleeting shadows on walls.
             </p>
             <p class="about-text">
-
 No pro gear or commercial goals here — just moments I thought were cool, beautiful, or worth pausing for.
             </p>
             <p class="about-text">
-
 Thanks for dropping by. Hope you enjoy scrolling through the gallery as much as I enjoyed putting it together.
 
 – VamVish🌿📸✈️
             </p>
-
         </div>
     </section>
 
@@ -694,7 +694,7 @@ Thanks for dropping by. Hope you enjoy scrolling through the gallery as much as 
                 const posY = Math.random() * 100;
                 const delay = Math.random() * 2;
                 const size = Math.random() * 3 + 2;
-                const hue = Math.random() * 60 + 240; // Blue-purple hues
+                const hue = Math.random() * 60 + 240;
 
                 star.style.left = `${posX}%`;
                 star.style.top = `${posY}%`;
